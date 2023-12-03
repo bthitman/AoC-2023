@@ -10,6 +10,45 @@ public class Day2 {
     private static String GREEN = "green";
 
     public static void main(String[] args) {
+        int sum = partOne();
+        System.out.println(sum);
+        sum = partTwo();
+        System.out.println(sum);
+    }
+
+    private static int partTwo() {
+        var sum = 0;
+        List<String> input = InputReader.parseInput("day2");
+        for (var line : input) {
+            int minRed = 0, minBlue = 0, minGreen = 0;
+            String[] split = line.split(":");
+            List<String> games = List.of(split[1].split(";"));
+            for (var game : games) {
+                String[] gameSplit = game.split(",");
+                for (var blah : gameSplit) {
+                    String[] g = blah.split(" ");
+                    int num = 0;
+                    if (g[2].contains(BLUE)) {
+                        num = Integer.parseInt(g[1]);
+                        if (num > minBlue) minBlue = num;
+                    }
+                    if (g[2].contains(RED)) {
+                        num = Integer.parseInt(g[1]);
+                        if (num > minRed) minRed = num;
+                    }
+                    if (g[2].contains(GREEN)) {
+                        num = Integer.parseInt(g[1]);
+                        if (num > minGreen) minGreen = num;
+                    }
+                }
+            }
+            sum += minBlue * minRed * minGreen;
+        }
+
+        return sum;
+    }
+
+    private static int partOne() {
         int maxRed = 12;
         int maxBlue = 14;
         int maxGreen = 13;
@@ -50,7 +89,6 @@ public class Day2 {
                 dodgy = false;
             }
         }
-
-        System.out.println(sum);
+        return sum;
     }
 }
